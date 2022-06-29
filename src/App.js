@@ -15,6 +15,7 @@ export default function App(){
         <Route  path="/home" element={<Home/>}></Route>
         <Route  path="/in" element={<TransationIn/>}></Route>
         <Route  path="/out" element={<TransationOut/>}></Route>
+      
         
 
     </Routes>    

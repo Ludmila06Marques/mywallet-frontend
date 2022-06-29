@@ -14,10 +14,15 @@ export default function Home(){
     </Down>
     <Footer>
         <Link to="/in">  
-        <New></New>
+        <New><ion-icon name="add-circle-outline"></ion-icon>
+        <Text>Nova entrada</Text>
+        </New>
         </Link>
         <Link to="/out">
-        <New></New>
+        <New><ion-icon name="remove-circle-outline"></ion-icon>
+        <Text>Nova saida </Text>
+        
+        </New>
         </Link>
     </Footer>
 
@@ -25,7 +30,20 @@ export default function Home(){
     
     </>)
 }
+const Text=styled.h1`
+color: 
+#FFFFFF;
+font-size: 17px;
+font-family: 'Raleway';
+font-weight: bold;
+
+
+`
 const New= styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: 10px;
 width: 
 155px;
 height: 114px;
@@ -33,17 +51,18 @@ background-color:
 #A328D6;
 margin: 10px;
 border-radius: 5px;
+color: #FFFFFF;
+font-size: 20px;
+
 `
 const Footer=styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+a{
+    text-decoration: none;
+}
 `
-
-
-
-
-
 
 const Down=styled.div`
 display: flex;
@@ -63,6 +82,8 @@ padding: 20px;
 const Title=styled.h1`
 color: #FFFFFF;
 font-size: 26px;
+font-family: 'Raleway';
+font-weight: bold;
 `
 const IconeExit=styled.div`
 color:#FFFFFF ;

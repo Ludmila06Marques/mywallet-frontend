@@ -7,7 +7,9 @@ export default function TransationOut(){
     return(<>
       <Header>
         <Title>Nova entrada</Title>
-        <IconeExit><ion-icon name="exit-outline"></ion-icon></IconeExit>
+        <IconeExit>  <Link to="/home">
+            <ion-icon name="arrow-back-circle-outline"></ion-icon>
+            </Link></IconeExit>
     </Header>
     <Down>
         <InputValue placeholder="Valor"/>
@@ -31,6 +33,7 @@ height: 46px;
 border-radius: 5px;
 border: 1px solid #A328D6;
 margin-top: 13px;
+font-weight: bold;
 
 `
 const InputDescription=styled.input`
@@ -40,6 +43,8 @@ border-radius: 5px;
 border: 1px solid #FFFFFF;
 margin-bottom: 13px;
 font-size: 20px;
+color: #000000;
+padding: 5px;
 `
 const InputValue=styled.input`
 width: 326px;
@@ -48,6 +53,8 @@ border-radius: 5px;
 border: 1px solid #FFFFFF;
 margin-bottom: 13px;
 font-size: 20px;
+color: #000000;
+padding: 5px;
 `
 
 
@@ -68,6 +75,9 @@ padding: 20px;
 const Title=styled.h1`
 color: #FFFFFF;
 font-size: 26px;
+font-family: 'Raleway';
+font-weight: bold;
+
 `
 const IconeExit=styled.div`
 color:#FFFFFF ;
