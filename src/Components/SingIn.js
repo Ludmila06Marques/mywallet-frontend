@@ -9,7 +9,9 @@ export default function SingIn(){
         <Title>MyWallet</Title>
         <InputEmail placeholder="E-mail"></InputEmail>
         <InputPassword placeholder="Senha"></InputPassword>
+        <Link to="/home">
         <SingInButton>Entrar</SingInButton>
+        </Link>
         <Link to="/sing-up">
         <SingUpButton>Primeira vez? Cadastre-se!</SingUpButton>
         </Link>
@@ -19,8 +21,6 @@ export default function SingIn(){
 }
 
 const Container=styled.div`
-width: 100%;
-height: 100%;
 display: flex;
 justify-content: center;
 flex-direction: column;
