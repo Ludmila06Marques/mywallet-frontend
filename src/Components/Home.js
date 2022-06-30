@@ -1,13 +1,18 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import userContext from "../Contexts/UserContext"
+import { useContext } from "react"
 import Transations from "./Transations"
 
 export default function Home(){
+    const {name }=useContext(userContext)
     return(
     <>
     <Header>
-        <Title>Olá, Fulano</Title>
+        <Title>Olá , {name}</Title>
+        <Link to="/">
         <IconeExit><ion-icon name="exit-outline"></ion-icon></IconeExit>
+        </Link>
     </Header>
     <Down>
        <Transations/>

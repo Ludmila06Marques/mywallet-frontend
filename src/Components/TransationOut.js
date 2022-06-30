@@ -1,7 +1,10 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import userContext from "../Contexts/UserContext"
+import { useContext } from "react"
 
 export default function Out(){
+    const {out , setOut, desOut , setDesOut }=useContext(userContext)
     return(<>
       <Header>
         <Title>Nova saida</Title>
@@ -12,8 +15,8 @@ export default function Out(){
             </IconeExit>
     </Header>
     <Down>
-        <InputValue placeholder="Valor"/>
-        <InputDescription placeholder="Descricao"/>
+        <InputValue placeholder="Valor" onChange={(e)=> setOut(e.target.value)} value={out}/>
+        <InputDescription placeholder="Descricao"  onChange={(e)=> setDesOut(e.target.value)} value={desOut}/>
         <Link to="/home">
         <SaveButton>Salvar saida</SaveButton>
         </Link>

@@ -1,9 +1,12 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import userContext from "../Contexts/UserContext"
+import { useContext } from "react"
 
 
 
 export default function TransationOut(){
+    const {enter , setEnter , desIn , setDesIn }=useContext(userContext)
     return(<>
       <Header>
         <Title>Nova entrada</Title>
@@ -12,8 +15,8 @@ export default function TransationOut(){
             </Link></IconeExit>
     </Header>
     <Down>
-        <InputValue placeholder="Valor"/>
-        <InputDescription placeholder="Descricao"/>
+        <InputValue placeholder="Valor" onChange={(e)=> setEnter(e.target.value)} value={enter}/>
+        <InputDescription placeholder="Descricao" onChange={(e)=> setDesIn(e.target.value)} value={desIn}/>
         <Link to="/home">
         <SaveButton>Salvar entrada</SaveButton>
         </Link>

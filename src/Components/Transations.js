@@ -67,7 +67,7 @@ const Name=styled.div`
 color:#000000;
 font-size: 16px;
 padding: 15px;
-margin-left: -75px;
+margin-left: -40px;
 font-family: 'raleway';
 `
 const Price=styled.div`

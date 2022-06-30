@@ -1,14 +1,18 @@
 import styled from "styled-components"
 import axios from "axios"
 import { Link } from "react-router-dom"
-
+import userContext from "../Contexts/UserContext"
+import { useContext } from "react"
 export default function SingIn(){
+
+    const {email , setEmail , password , setPassword }=useContext(userContext)
+
     return(
     <>
     <Container>
         <Title>MyWallet</Title>
-        <InputEmail placeholder="E-mail"></InputEmail>
-        <InputPassword placeholder="Senha"></InputPassword>
+        <InputEmail placeholder="E-mail"onChange={(e)=> setEmail(e.target.value)} value={email} ></InputEmail>
+        <InputPassword placeholder="Senha "onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
         <Link to="/home">
         <SingInButton>Entrar</SingInButton>
         </Link>
@@ -19,6 +23,10 @@ export default function SingIn(){
     </Container>
     </>)
 }
+/*Preciso mandar um objeto no estilo 
+email
+password
+e um headers com um token  */
 
 const Container=styled.div`
 display: flex;

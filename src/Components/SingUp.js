@@ -1,16 +1,19 @@
 import styled from "styled-components"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import userContext from "../Contexts/UserContext"
+import { useContext } from "react"
 
 export default function SingUp(){
+    const {email , setEmail , password , setPassword , name  , setName , confirmPass , setConfirmPass}=useContext(userContext)
     return(
     <>
     <Container>
     <Title>MyWallet</Title>
-    <InputName placeholder="Name"></InputName>
-    <InputEmail placeholder="E-mail"></InputEmail>
-    <InputPassword type="password" placeholder="Senha"></InputPassword>
-    <InputConfirm type="password" placeholder="Confirme a senha"></InputConfirm>
+    <InputName placeholder="Name" onChange={(e)=> setName(e.target.value)} value={name}></InputName>
+    <InputEmail placeholder="E-mail" onChange={(e)=> setEmail(e.target.value)} value={email}></InputEmail>
+    <InputPassword type="password"  placeholder="Senha"onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
+    <InputConfirm type="password" placeholder="Confirme a senha"onChange={(e)=> setConfirmPass(e.target.value)} value={confirmPass}></InputConfirm>
     <Link to="/">
      <SingUpButton>Cadastrar</SingUpButton>
      </Link>
@@ -19,6 +22,11 @@ export default function SingUp(){
     </Container>
     </>)
 }
+/*Preciso mandar um objeto no estilo 
+name,
+email
+password
+ */
 const Container=styled.div`
 width: 100%;
 height: 100%;
