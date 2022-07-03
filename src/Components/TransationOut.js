@@ -2,53 +2,67 @@ import styled from "styled-components"
 import { Link , useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
-import dayjs from "dayjs"
 import axios from "axios"
 
 
+
 export default function Out(){
-    const  {des , setDes , token , enter , setEnter }=useContext(userContext)
+    const  {des , setDes , token , enter , setEnter , setTrans, trans , saldo }=useContext(userContext)
     const navigate=useNavigate()
 
-    function newTransation(){
-        const config={
+    async function newTransation(){
+        const body={
+            value:parseFloat(enter),
+            description:des,
+            type:"out"
+        }
+        const headers={
             headers:{
             Authorization:`Bearer ${token}`
             }
         }
-        const body={
-            value:parseInt(enter),
-            description:des,
-            type:"out"
-           
+     
+        try {
+            if(enter > saldo){
+                alert("saldo insuficiente tente outro valor ")
+                return;
+            }
+            else{
+                await axios.post('http://localhost:5008/transations' , body, headers )
+            
+                setDes("")
+                setEnter("")
+                 navigate('/home')
+            }
+             
+        } catch (error) {
+            console.log("An error occurred.");
+            console.log(error);
         }
-        const promise= axios.post('http://localhost:5000/transations' , config , body)
-        promise
-        .then(res=>{ 
-            console.log(res.data)
-       navigate('/home')
-        })    
-        .catch(err=>{          
-          console.log(err)
-           
-        })
+       
 
+    }
+
+    function voltar(){
+        setEnter("")
+        setDes("")
+        navigate("/home")
     }
     return(<>
       <Header>
         <Title>Nova saida</Title>
-        <IconeExit>
-            <Link to="/home">
+        <IconeExit  onClick={voltar} >
+           
             <ion-icon name="arrow-back-circle-outline"></ion-icon>
-            </Link>
+          
             </IconeExit>
     </Header>
     <Down>
         <InputValue placeholder="Valor" onChange={(e)=> setEnter(e.target.value)} value={enter}/>
         <InputDescription placeholder="Descricao"  onChange={(e)=> setDes(e.target.value)} value={des}/>
-        <Link to="/home">
+       
         <SaveButton onClick={newTransation} >Salvar saida</SaveButton>
-        </Link>
+      
 
     </Down>
     </>)

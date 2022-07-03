@@ -3,29 +3,32 @@ import axios from "axios"
 import { Link  , useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
-export default function SingIn(){
+export default function SignIn(){
     const {email , setEmail , password , setPassword    , setToken , setLogin }=useContext(userContext)
 
     const navigate= useNavigate()
-    function entrar(){
+    function signIn(){
         const body={ email , password }
-       
 
-        const promise= axios.post('http://localhost:5000/sing-in' , body)
+        const promise= axios.post('http://localhost:5008/sign-in' , body)
       
         promise
         .then(res=>{ 
+            
            setLogin(res.data)
-           setToken(res.data.token)
-            console.log(res.data)        
-           
-            navigate("/home")
+           setToken(res.data.token)                
+            navigate("/home")   
               
 
            
         })    
-        .catch(err=>{          
-         
+        .catch(err=>{   
+            if( err.response.status == 409) {
+                return alert("usuario ja cadastrado")
+            }
+            
+            
+    
            
         })
 
@@ -41,9 +44,9 @@ export default function SingIn(){
         <InputEmail placeholder="E-mail"onChange={(e)=> setEmail(e.target.value)} value={email} ></InputEmail>
         <InputPassword placeholder="Senha "type="password" onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
        
-        <SingInButton onClick={entrar} >Entrar</SingInButton>
+        <SingInButton onClick={signIn} >Entrar</SingInButton>
         
-        <Link to="/sing-up">
+        <Link to="/sign-up">
         <SingUpButton>Primeira vez? Cadastre-se!</SingUpButton>
         </Link>
 

@@ -1,61 +1,96 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import userContext from "../Contexts/UserContext"
-import { useContext , useState } from "react"
+import { useContext , useEffect, useState } from "react"
 import axios from "axios"
 
 function OneTransation({date , value , des ,type}){
+    function deletar(){
+        window.confirm("Deseja apagar a transacao?")
+         }
+         console.log(type)
     return(<>
+ <Container>
      <Date>{date}</Date>
          <Name>{des}</Name>
          <Price type={type}  >{value}</Price>
-    
+         <X onClick={deletar}>X</X>
+         </Container>
     </>)
 }
 
 export default function Transations(){
-    const [trans , setTrans]=useState([])
-    const {token , login}=useContext(userContext)
    
+    const {token , login , trans , setTrans  , saldo , setSaldo}=useContext(userContext)
 
+    useEffect(()=>{
 
-    function pegarTransacoes(){
+        async function pegarSaldo(){
+             const config={
+                 headers:{
+                 authorization:`Bearer ${token}`
+                 }
+             }
+             try {
+                 
+                 
+                     const promise = await axios.get('http://localhost:5008/saldo' , config )
+                     setSaldo(promise.data.saldo)
+                   console.log(promise.data)
+                    
+     
+             } catch (error) {
+                 console.log(error)
+            
+             }   
+         }
+         pegarSaldo()
+     },[ ])
+   
+   
+    useEffect(()=>{
+
+   async function pegarTransacoes(){
         const config={
             headers:{
-            Authorization:`Bearer ${token}`
+            authorization:`Bearer ${token}`
             }
         }
+        try {
+            
+            
+                const promise = await axios.get('http://localhost:5008/transations' , config )
+                setTrans([...promise.data])   
+                //calculo das entradas
+               
 
-        const promise= axios.get('http://localhost:5000/transations' , config )
-      
-        promise
-        .then(res=>{ 
-          setTrans([...res.data])
-        })    
-        .catch(err=>{          
-          console.log(err)
-           
-        })
+        } catch (error) {
+            console.log(error)
+       
+        }   
     }
+    pegarTransacoes()
+   
+},[ ])
+
+
   
     //data
     //conceito
     //preco
     //type
 
-    function deletar(){
-   window.confirm("Deseja apagar a transacao?")
-    }
-    pegarTransacoes()
+  
+ 
   
     return(<>
      {trans.length!==0?
      <Register>
      <One >
-     {trans.map((item , index)=><OneTransation key={index} index={index}  date={item.date}  des={item.des} value={item.value} type={item.type} />)}
+     {trans.map((item , index)=><OneTransation key={index} index={index}  date={item.date}  des={item.description} value={item.value} type={item.type} />)}
         
 
-         <X onClick={deletar}>X</X>
+        
      </One>
     
  </Register> : <RegisterO>
@@ -66,11 +101,17 @@ export default function Transations(){
     
     <Footer>
         <Saldo>SALDO</Saldo>
-        <Value>{login.userExist.saldo}</Value>
+        <Value>{saldo}</Value>
 
     </Footer>
 </>)
 }
+const Container=styled.div`
+display:flex;
+align-items: center;
+width: 100%;
+`
+
 // <Text></Text>
 const RegisterO=styled.div`
 display: flex;
@@ -86,6 +127,8 @@ const X=styled.h1`
 margin-right: 10px;
 color: #C6C6C6;
 font-size: 16px;
+position: fixed;
+right: 30px;
 `
 const Value=styled.h1`
 font-size: 17px;
@@ -93,6 +136,7 @@ color:
 #03AC00;
 font-weight: bold;
 font-family: 'raleway';
+
 
 `
 const Saldo=styled.h1`
@@ -118,12 +162,12 @@ color: #C6C6C6;
 font-size: 16px;
 padding: 15px;
 font-family: 'raleway';
+
 `
 const Name=styled.div`
 color:#000000;
 font-size: 16px;
 padding: 15px;
-margin-left: -40px;
 font-family: 'raleway';
 `
 const Price=styled.div`
@@ -131,11 +175,14 @@ color:${props => props.type =="in" ? "#03AC00": "#C70000"};
 font-size: 16px;
 padding: 15px;
 font-family: 'raleway';
+position: fixed;
+right: 50px;
 
 `
 //#03AC00
 const One=styled.div`
 display: flex;
+flex-direction: column;
 justify-content: space-between;
 align-items: center;
 

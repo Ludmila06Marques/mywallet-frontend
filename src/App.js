@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./Components/Home"
-import SingIn from "./Components/SingIn"
-import SingUp from "./Components/SingUp"
+import SignIn from "./Components/SignIn"
+import SignUp from "./Components/SignUp"
 import TransationIn from "./Components/TransationIn"
 import TransationOut from "./Components/TransationOut"
 import userContext from "../src/Contexts/UserContext"
@@ -18,16 +18,19 @@ export default function App(){
     const [des , setDes]=useState("")
     const [login , setLogin]=useState()
     const [token , setToken]=useState()
+    const [trans , setTrans]=useState([])
+    const [saldo , setSaldo]=useState()
     
+    console.log(login)
   
 
 
     return(
-        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken}}>
+        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken , setTrans , trans , saldo , setSaldo}}>
     <BrowserRouter>
     <Routes>
-        <Route  path="/" element={<SingIn/>}></Route>
-        <Route  path="/sing-up" element={<SingUp/>}></Route>
+        <Route  path="/" element={<SignIn/>}></Route>
+        <Route  path="/sign-up" element={<SignUp/>}></Route>
         <Route  path="/home" element={<Home/>}></Route>
         <Route  path="/in" element={<TransationIn/>}></Route>
         <Route  path="/out" element={<TransationOut/>}></Route>

@@ -7,36 +7,35 @@ import {useNavigate} from 'react-router-dom'
 import axios from "axios"
 
 //valor , cescricao  , hora , tipo
-// mandar o preco como numer
+// mandar o preco como number
 
 
 export default function SaveTransation(){
     const navigate = useNavigate()
-    const {enter , setEnter , des , setDes , token}=useContext(userContext)
+    const {enter , setEnter , des , setDes , token , setTrans , trans}=useContext(userContext)
 
-    function newTransation(){
-      
-
-
-        const config={
+   async function newTransation(){
+        const body={
+            value:parseFloat(enter),
+            description:des,
+            type:"in"
+        }
+        const headers={
             headers:{
             Authorization:`Bearer ${token}`
             }
         }
-        const body={
-            value:parseInt(enter),
-            description:des,
-            type:"out"
+     
+        try {
+             await axios.post('http://localhost:5008/transations' , body, headers )
+             setDes("")
+            setEnter("")
+             navigate('/home')
+        } catch (error) {
+            console.log("An error occurred.");
+            console.log(error);
         }
-        const promise= axios.post('http://localhost:5000/transations' , config , body)
-        promise
-        .then(res=>{ 
-       navigate('/home')
-        })    
-        .catch(err=>{          
-          console.log(err)
-           
-        })
+       
 
     }
 
@@ -51,9 +50,9 @@ export default function SaveTransation(){
     <Down>
         <InputValue placeholder="Valor" onChange={(e)=> setEnter(e.target.value)} value={enter}/>
         <InputDescription placeholder="Descricao" onChange={(e)=> setDes(e.target.value)} value={des}/>
-        <Link to="/home">
+       
         <SaveButton onClick={newTransation} >Salvar entrada</SaveButton>
-        </Link>
+       
 
     </Down>
     </>)

@@ -5,13 +5,13 @@ import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-export default function SingUp(){
+export default function SignUp(){
     const navigate= useNavigate()
 
      function   cadastrar(){
         const body={email , name , password, confirm:confirmPass}
                 
-         const promise=   axios.post('http://localhost:5000/sing-up' , body)
+         const promise=   axios.post('http://localhost:5008/sign-up' , body)
       
         promise
         .then(res=>{ 
