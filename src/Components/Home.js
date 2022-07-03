@@ -5,11 +5,13 @@ import { useContext } from "react"
 import Transations from "./Transations"
 
 export default function Home(){
-    const {name }=useContext(userContext)
+    const {login }=useContext(userContext)
+
+
     return(
     <>
     <Header>
-        <Title>Olá , {name}</Title>
+        <Title>Olá , {login.userExist.name}</Title>
         <Link to="/">
         <IconeExit><ion-icon name="exit-outline"></ion-icon></IconeExit>
         </Link>
@@ -41,7 +43,7 @@ color:
 font-size: 17px;
 font-family: 'Raleway';
 font-weight: bold;
-
+max-width: 50px;
 
 `
 const New= styled.div`

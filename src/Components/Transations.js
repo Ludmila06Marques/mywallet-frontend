@@ -1,31 +1,87 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import userContext from "../Contexts/UserContext"
+import { useContext , useState } from "react"
+import axios from "axios"
 
+function OneTransation({date , value , des ,type}){
+    return(<>
+     <Date>{date}</Date>
+         <Name>{des}</Name>
+         <Price type={type}  >{value}</Price>
+    
+    </>)
+}
 
 export default function Transations(){
+    const [trans , setTrans]=useState([])
+    const {token , login}=useContext(userContext)
+   
+
+
+    function pegarTransacoes(){
+        const config={
+            headers:{
+            Authorization:`Bearer ${token}`
+            }
+        }
+
+        const promise= axios.get('http://localhost:5000/transations' , config )
+      
+        promise
+        .then(res=>{ 
+          setTrans([...res.data])
+        })    
+        .catch(err=>{          
+          console.log(err)
+           
+        })
+    }
+  
+    //data
+    //conceito
+    //preco
+    //type
+
     function deletar(){
    window.confirm("Deseja apagar a transacao?")
     }
+    pegarTransacoes()
   
-    return(<> 
-    <Register>
-        <One >
-            <Date>30/11</Date>
-            <Name>Ludmila marques</Name>
-            <Price>10,90</Price>
+    return(<>
+     {trans.length!==0?
+     <Register>
+     <One >
+     {trans.map((item , index)=><OneTransation key={index} index={index}  date={item.date}  des={item.des} value={item.value} type={item.type} />)}
+        
 
-            <X onClick={deletar}>X</X>
-        </One>
-       
-    </Register>
+         <X onClick={deletar}>X</X>
+     </One>
+    
+ </Register> : <RegisterO>
+    <Text>Voce nao tem nenhuma transacao</Text>
+ </RegisterO>
+    }
+
+    
     <Footer>
         <Saldo>SALDO</Saldo>
-        <Value>30000</Value>
+        <Value>{login.userExist.saldo}</Value>
 
     </Footer>
 </>)
 }
 // <Text></Text>
+const RegisterO=styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 325px;
+height: 400px;
+background-color: 
+#FFFFFF;
+border-radius:  5px 5px 0px 0px;
+`
 const X=styled.h1`
 margin-right: 10px;
 color: #C6C6C6;
@@ -71,7 +127,7 @@ margin-left: -40px;
 font-family: 'raleway';
 `
 const Price=styled.div`
-color:#C70000;
+color:${props => props.type =="in" ? "#03AC00": "#C70000"};
 font-size: 16px;
 padding: 15px;
 font-family: 'raleway';
@@ -82,6 +138,7 @@ const One=styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
+
 margin-top: 23px;
 
 `
@@ -93,7 +150,8 @@ background-color:
 border-radius:  5px 5px 0px 0px;
 `
 const Text=styled.h2`
-
+max-width: 200px;
+text-align: center;
 color: 
 #868686;
 font-size: 20px;

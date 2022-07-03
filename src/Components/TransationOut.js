@@ -1,10 +1,39 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link , useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
+import dayjs from "dayjs"
+import axios from "axios"
+
 
 export default function Out(){
-    const {out , setOut, desOut , setDesOut }=useContext(userContext)
+    const  {des , setDes , token , enter , setEnter }=useContext(userContext)
+    const navigate=useNavigate()
+
+    function newTransation(){
+        const config={
+            headers:{
+            Authorization:`Bearer ${token}`
+            }
+        }
+        const body={
+            value:parseInt(enter),
+            description:des,
+            type:"out"
+           
+        }
+        const promise= axios.post('http://localhost:5000/transations' , config , body)
+        promise
+        .then(res=>{ 
+            console.log(res.data)
+       navigate('/home')
+        })    
+        .catch(err=>{          
+          console.log(err)
+           
+        })
+
+    }
     return(<>
       <Header>
         <Title>Nova saida</Title>
@@ -15,10 +44,10 @@ export default function Out(){
             </IconeExit>
     </Header>
     <Down>
-        <InputValue placeholder="Valor" onChange={(e)=> setOut(e.target.value)} value={out}/>
-        <InputDescription placeholder="Descricao"  onChange={(e)=> setDesOut(e.target.value)} value={desOut}/>
+        <InputValue placeholder="Valor" onChange={(e)=> setEnter(e.target.value)} value={enter}/>
+        <InputDescription placeholder="Descricao"  onChange={(e)=> setDes(e.target.value)} value={des}/>
         <Link to="/home">
-        <SaveButton>Salvar saida</SaveButton>
+        <SaveButton onClick={newTransation} >Salvar saida</SaveButton>
         </Link>
 
     </Down>

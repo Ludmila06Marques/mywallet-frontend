@@ -15,13 +15,15 @@ export default function App(){
     const [name , setName]=useState("")
     const [confirmPass , setConfirmPass]=useState("")
     const [enter, setEnter]=useState("")
-    const [out , setOut]=useState("")
-    const [desIn , setDesIn]=useState("")
-    const [desOut , setDesOut]=useState("")
+    const [des , setDes]=useState("")
+    const [login , setLogin]=useState()
+    const [token , setToken]=useState()
+    
+  
 
 
     return(
-        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter , out , setOut , desIn , setDesIn , desOut , setDesOut}}>
+        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken}}>
     <BrowserRouter>
     <Routes>
         <Route  path="/" element={<SingIn/>}></Route>

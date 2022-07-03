@@ -1,21 +1,48 @@
 import styled from "styled-components"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link  , useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
 export default function SingIn(){
+    const {email , setEmail , password , setPassword    , setToken , setLogin }=useContext(userContext)
 
-    const {email , setEmail , password , setPassword }=useContext(userContext)
+    const navigate= useNavigate()
+    function entrar(){
+        const body={ email , password }
+       
+
+        const promise= axios.post('http://localhost:5000/sing-in' , body)
+      
+        promise
+        .then(res=>{ 
+           setLogin(res.data)
+           setToken(res.data.token)
+            console.log(res.data)        
+           
+            navigate("/home")
+              
+
+           
+        })    
+        .catch(err=>{          
+         
+           
+        })
+
+
+    }
+
+   
 
     return(
     <>
     <Container>
         <Title>MyWallet</Title>
         <InputEmail placeholder="E-mail"onChange={(e)=> setEmail(e.target.value)} value={email} ></InputEmail>
-        <InputPassword placeholder="Senha "onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
-        <Link to="/home">
-        <SingInButton>Entrar</SingInButton>
-        </Link>
+        <InputPassword placeholder="Senha "type="password" onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
+       
+        <SingInButton onClick={entrar} >Entrar</SingInButton>
+        
         <Link to="/sing-up">
         <SingUpButton>Primeira vez? Cadastre-se!</SingUpButton>
         </Link>
