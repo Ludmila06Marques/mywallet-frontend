@@ -4,7 +4,7 @@ import { Link  , useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
 export default function SignIn(){
-    const {email , setEmail , password , setPassword    , setToken , setLogin }=useContext(userContext)
+    const {email , setEmail , password , setPassword    , setToken , setLogin  , setView , view}=useContext(userContext)
 
     const navigate= useNavigate()
     function signIn(){
@@ -35,6 +35,12 @@ export default function SignIn(){
 
     }
 
+    function verSenha(){
+        setView("text")
+    }
+    function esconderSenha(){
+        setView("password")
+    }
    
 
     return(
@@ -42,7 +48,15 @@ export default function SignIn(){
     <Container>
         <Title>MyWallet</Title>
         <InputEmail placeholder="E-mail"onChange={(e)=> setEmail(e.target.value)} value={email} ></InputEmail>
-        <InputPassword placeholder="Senha "type="password" onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
+       <Group>
+        {view==="password"?
+         <IconEye onClick={verSenha}><ion-icon name="eye-outline"></ion-icon></IconEye>
+        :
+        <IconEye  onClick={esconderSenha}><ion-icon name="eye-off-outline"></ion-icon></IconEye>
+        }
+       
+        <InputPassword placeholder="Senha "type={view} onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
+        </Group>
        
         <SingInButton onClick={signIn} >Entrar</SingInButton>
         
@@ -54,6 +68,21 @@ export default function SignIn(){
     </>)
 }
 
+const Group=styled.div`
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+
+`
+
+const IconEye=styled.div`
+position: absolute;
+font-size: 25px;
+right: 10px;
+color: gray;
+
+`
 const Container=styled.div`
 display: flex;
 justify-content: center;
@@ -63,6 +92,7 @@ align-items: center;
 a{
     text-decoration: none;
 }
+
 `
 const Title = styled.h1`
 color: #FFFFFF;
@@ -91,6 +121,8 @@ font-size: 20px;
 color: 
 #000000;
 padding: 5px;
+
+
 `
 
 const SingInButton= styled.button`

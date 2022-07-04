@@ -1,22 +1,26 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link ,useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
 import Transations from "./Transations"
 
 export default function Home(){
-    const {login }=useContext(userContext)
+    const {login , setEmail , setPassword}=useContext(userContext)
 
-    
-
+    const navigate= useNavigate()
+    function sair(){
+        setPassword("")
+        setEmail("")
+        navigate("/")
+    }
 
     return(
     <>
     <Header>
         <Title>Olá , {login.userExist.name}</Title>
-        <Link to="/">
-        <IconeExit><ion-icon name="exit-outline"></ion-icon></IconeExit>
-        </Link>
+       
+        <IconeExit onClick={sair} ><ion-icon name="exit-outline"></ion-icon></IconeExit>
+       
     </Header>
     <Down>
        <Transations/>

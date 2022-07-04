@@ -27,18 +27,37 @@ export default function SignUp(){
 
        
     }
+    function verSenha(){
+        setView("text")
+    }
+    function esconderSenha(){
+        setView("password")
+    }
 
-
-    const {email , setEmail , password , setPassword , name  , setName , confirmPass , setConfirmPass}=useContext(userContext)
+    const {email , setEmail , password , setPassword , name  , setName , confirmPass , setConfirmPass , view , setView}=useContext(userContext)
     return(
     <>
     <Container>
     <Title>MyWallet</Title>
     <InputName placeholder="Name" onChange={(e)=> setName(e.target.value)} value={name}></InputName>
     <InputEmail placeholder="E-mail" onChange={(e)=> setEmail(e.target.value)} value={email}></InputEmail>
-    <InputPassword type="password"  placeholder="Senha"onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
-    <InputConfirm type="password" placeholder="Confirme a senha"onChange={(e)=> setConfirmPass(e.target.value)} value={confirmPass}></InputConfirm>
-   
+    <Group>  
+    {view==="password"?
+         <IconEye onClick={verSenha}><ion-icon name="eye-outline"></ion-icon></IconEye>
+        :
+        <IconEye  onClick={esconderSenha}><ion-icon name="eye-off-outline"></ion-icon></IconEye>
+        }
+    <InputPassword type={view}  placeholder="Senha"onChange={(e)=> setPassword(e.target.value)} value={password}></InputPassword>
+    </Group>
+
+    <Group>
+    {view==="password"?
+         <IconEye onClick={verSenha}><ion-icon name="eye-outline"></ion-icon></IconEye>
+        :
+        <IconEye  onClick={esconderSenha}><ion-icon name="eye-off-outline"></ion-icon></IconEye>
+        }
+    <InputConfirm type={view} placeholder="Confirme a senha"onChange={(e)=> setConfirmPass(e.target.value)} value={confirmPass}></InputConfirm>
+    </Group>
      <SingUpButton onClick={cadastrar} >Cadastrar</SingUpButton>
     
      <Link to="/" >
@@ -51,6 +70,21 @@ export default function SignUp(){
     </>)
 }
 
+const Group=styled.div`
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+
+`
+
+const IconEye=styled.div`
+position: absolute;
+font-size: 25px;
+right: 10px;
+color: gray;
+
+`
 const Back=styled.h3`
 color: 
 #FFFFFF;

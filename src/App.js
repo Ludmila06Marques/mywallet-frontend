@@ -20,10 +20,11 @@ export default function App(){
     const [token , setToken]=useState()
     const [trans , setTrans]=useState([])
     const [saldo , setSaldo]=useState()
+    const [view , setView]=useState("password")
     
    
     return(
-        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken , setTrans , trans , saldo , setSaldo}}>
+        <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken , setTrans , trans , saldo , setSaldo , view , setView}}>
     <BrowserRouter>
     <Routes>
         <Route  path="/" element={<SignIn/>}></Route>
