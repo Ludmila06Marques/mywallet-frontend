@@ -1,27 +1,26 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
 import userContext from "../Contexts/UserContext"
-import { useContext , useEffect, useState } from "react"
+import { useContext , useEffect } from "react"
 import axios from "axios"
 
 function OneTransation({date , value , des ,type}){
     function deletar(){
         window.confirm("Deseja apagar a transacao?")
          }
-         console.log(type)
+        
     return(<>
- <Container>
-     <Date>{date}</Date>
-         <Name>{des}</Name>
-         <Price type={type}  >{value}</Price>
-         <X onClick={deletar}>X</X>
-         </Container>
+    <Container>
+        <Date>{date}</Date>
+        <Description>{des}</Description>
+        <Deposit type={type}  >{value}</Deposit>
+        <Delete onClick={deletar} >X</Delete>
+     </Container>
     </>)
 }
 
 export default function Transations(){
    
-    const {token , login , trans , setTrans  , saldo , setSaldo}=useContext(userContext)
+    const {token  , trans , setTrans  , saldo , setSaldo}=useContext(userContext)
 
     useEffect(()=>{
 
@@ -34,18 +33,18 @@ export default function Transations(){
              try {
                  
                  
-                     const promise = await axios.get('http://localhost:5008/saldo' , config )
+                     const promise = await axios.get('https://drivenmywallet.herokuapp.com/saldo' , config )
                      setSaldo(promise.data.saldo)
-                   console.log(promise.data)
+                  
                     
      
              } catch (error) {
-                 console.log(error)
+                alert(error)
             
              }   
          }
          pegarSaldo()
-     },[ ])
+     },[setSaldo , token ])
    
    
     useEffect(()=>{
@@ -59,7 +58,7 @@ export default function Transations(){
         try {
             
             
-                const promise = await axios.get('http://localhost:5008/transations' , config )
+                const promise = await axios.get('https://drivenmywallet.herokuapp.com/transations' , config )
                 setTrans([...promise.data])   
                 //calculo das entradas
                
@@ -71,15 +70,10 @@ export default function Transations(){
     }
     pegarTransacoes()
    
-},[ ])
+},[ setTrans , token])
 
 
   
-    //data
-    //conceito
-    //preco
-    //type
-
   
  
   
@@ -106,11 +100,50 @@ export default function Transations(){
     </Footer>
 </>)
 }
+
 const Container=styled.div`
-display:flex;
-align-items: center;
-width: 100%;
+display: flex;
 `
+const Date=styled.div`
+width: 60px;
+height: 100%;
+
+margin-bottom: 20px;
+margin-left: 10px;
+color: #C6C6C6;
+font-size: 16px;
+font-family: 'raleway';
+`
+const Description = styled.div`
+width: 180px;
+
+margin-bottom: 20px;
+height: 100%;
+color: black;
+font-size: 16px;
+font-family: 'raleway';
+
+`
+
+const Deposit = styled.div`
+width: 60px;
+margin-bottom: 20px;
+height: 100%;
+color:${props => props.type ==="in" ? "#03AC00": "#C70000"};
+font-size: 16px;
+font-family: 'raleway';
+`
+const Delete=styled.div`
+width: 15px;
+
+margin-bottom: 20px;
+height: 100%;
+margin-right: 10px;
+color: #C6C6C6;
+font-size: 16px;
+
+`
+
 
 // <Text></Text>
 const RegisterO=styled.div`
@@ -123,13 +156,7 @@ background-color:
 #FFFFFF;
 border-radius:  5px 5px 0px 0px;
 `
-const X=styled.h1`
-margin-right: 10px;
-color: #C6C6C6;
-font-size: 16px;
-position: fixed;
-right: 30px;
-`
+
 const Value=styled.h1`
 font-size: 17px;
 color: 
@@ -157,34 +184,10 @@ background-color:
 #FFFFFF;
 border-radius: 0px 0px 5px 5px;
 `
-const Date=styled.div`
-color: #C6C6C6;
-font-size: 16px;
-padding: 15px;
-font-family: 'raleway';
 
-`
-const Name=styled.div`
-color:#000000;
-font-size: 16px;
-padding: 15px;
-font-family: 'raleway';
-`
-const Price=styled.div`
-color:${props => props.type =="in" ? "#03AC00": "#C70000"};
-font-size: 16px;
-padding: 15px;
-font-family: 'raleway';
-position: fixed;
-right: 50px;
-
-`
 //#03AC00
 const One=styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
+
 
 margin-top: 23px;
 
@@ -195,6 +198,7 @@ height: 400px;
 background-color: 
 #FFFFFF;
 border-radius:  5px 5px 0px 0px;
+overflow-y: scroll;
 `
 const Text=styled.h2`
 max-width: 200px;

@@ -21,10 +21,7 @@ export default function App(){
     const [trans , setTrans]=useState([])
     const [saldo , setSaldo]=useState()
     
-    console.log(login)
-  
-
-
+   
     return(
         <userContext.Provider value={{email, setEmail, password, setPassword , name, setName , confirmPass , setConfirmPass , enter , setEnter ,des , setDes , login ,setLogin , token , setToken , setTrans , trans , saldo , setSaldo}}>
     <BrowserRouter>

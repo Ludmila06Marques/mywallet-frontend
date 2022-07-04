@@ -2,17 +2,13 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext   } from "react"
-import dayjs from "dayjs"
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
-
-//valor , cescricao  , hora , tipo
-// mandar o preco como number
 
 
 export default function SaveTransation(){
     const navigate = useNavigate()
-    const {enter , setEnter , des , setDes , token , setTrans , trans}=useContext(userContext)
+    const {enter , setEnter , des , setDes , token }=useContext(userContext)
 
    async function newTransation(){
         const body={
@@ -27,13 +23,12 @@ export default function SaveTransation(){
         }
      
         try {
-             await axios.post('http://localhost:5008/transations' , body, headers )
+             await axios.post('https://drivenmywallet.herokuapp.com/transations' , body, headers )
              setDes("")
             setEnter("")
              navigate('/home')
         } catch (error) {
-            console.log("An error occurred.");
-            console.log(error);
+            alert(error)
         }
        
 

@@ -11,7 +11,7 @@ export default function SignUp(){
      function   cadastrar(){
         const body={email , name , password, confirm:confirmPass}
                 
-         const promise=   axios.post('http://localhost:5008/sign-up' , body)
+         const promise=   axios.post('https://drivenmywallet.herokuapp.com/sign-up' , body)
       
         promise
         .then(res=>{ 

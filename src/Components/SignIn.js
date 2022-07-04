@@ -10,7 +10,7 @@ export default function SignIn(){
     function signIn(){
         const body={ email , password }
 
-        const promise= axios.post('http://localhost:5008/sign-in' , body)
+        const promise= axios.post('https://drivenmywallet.herokuapp.com/sign-in' , body)
       
         promise
         .then(res=>{ 
@@ -23,7 +23,7 @@ export default function SignIn(){
            
         })    
         .catch(err=>{   
-            if( err.response.status == 409) {
+            if( err.response.status === 409) {
                 return alert("usuario ja cadastrado")
             }
             
@@ -53,10 +53,6 @@ export default function SignIn(){
     </Container>
     </>)
 }
-/*Preciso mandar um objeto no estilo 
-email
-password
-e um headers com um token  */
 
 const Container=styled.div`
 display: flex;

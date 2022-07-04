@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Link , useNavigate} from "react-router-dom"
+import {  useNavigate} from "react-router-dom"
 import userContext from "../Contexts/UserContext"
 import { useContext } from "react"
 import axios from "axios"
@@ -7,7 +7,7 @@ import axios from "axios"
 
 
 export default function Out(){
-    const  {des , setDes , token , enter , setEnter , setTrans, trans , saldo }=useContext(userContext)
+    const  {des , setDes , token , enter , setEnter , saldo }=useContext(userContext)
     const navigate=useNavigate()
 
     async function newTransation(){
@@ -28,7 +28,7 @@ export default function Out(){
                 return;
             }
             else{
-                await axios.post('http://localhost:5008/transations' , body, headers )
+                await axios.post('https://drivenmywallet.herokuapp.com/transations' , body, headers )
             
                 setDes("")
                 setEnter("")
@@ -36,8 +36,8 @@ export default function Out(){
             }
              
         } catch (error) {
-            console.log("An error occurred.");
-            console.log(error);
+          alert(error)
+            
         }
        
 
