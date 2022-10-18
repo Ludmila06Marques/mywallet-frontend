@@ -1,4 +1,4 @@
-<h1>Subscription of plans</h1>
+<h1>Bank account</h1>
 
 <h3>Application made in a responsive way, using react, javascript and styled components</h3>
 
